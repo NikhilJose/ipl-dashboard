@@ -1,0 +1,3 @@
+[submodule "src/frontend"]
+	path = src/frontend
+	url = https://github.com/NikhilJose/ipl-dashboard.git
