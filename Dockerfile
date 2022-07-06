@@ -4,6 +4,7 @@ COPY ./src/frontend/package.json /workspace
 COPY src /workspace/src/
 RUN echo "$PWD"
 RUN ls
+RUN npm install
 RUN npm run build
 
 FROM maven:3.6.1-jdk-8-slim AS MAVEN_BUILD
