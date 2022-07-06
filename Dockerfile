@@ -1,4 +1,7 @@
 FROM maven:3.6.1-jdk-8-slim
+WORKDIR /build
+COPY pom.xml /build/
+COPY src /build/src/
 RUN echo "$PWD"
 RUN ls
 RUN mvn clean install
