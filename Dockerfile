@@ -1,14 +1,9 @@
-FROM node:alpine
-WORKDIR /workspace
-COPY ./src/frontend/package.json /workspace
-RUN echo "$PWD"
-RUN ls
-RUN npm run build
-
 FROM maven:3.6.1-jdk-8-slim AS MAVEN_BUILD
 WORKDIR /build
 COPY pom.xml /build/
 COPY src /build/src/
+RUN echo "$PWD"
+RUN ls
 RUN mvn clean install
 
 FROM openjdk:8-alpine
