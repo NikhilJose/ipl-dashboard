@@ -1,4 +1,5 @@
 FROM maven:3.6.1-jdk-8-slim
+RUN echo "$PWD"
 RUN mvn clean install
 
 FROM openjdk:8-alpine
