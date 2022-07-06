@@ -1,6 +1,7 @@
 FROM node:alpine
 WORKDIR /workspace
 COPY ./src/frontend/package.json /workspace
+COPY src /workspace/src/
 RUN echo "$PWD"
 RUN ls
 RUN npm run build
