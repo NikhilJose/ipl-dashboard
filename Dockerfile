@@ -9,5 +9,4 @@ RUN mvn clean install
 FROM openjdk:8-alpine
 WORKDIR /app
 COPY --from=MAVEN_BUILD /build/target/*.jar /app/application.jar
-EXPOSE 8081
 ENTRYPOINT ["java","-jar","application.jar"]
