@@ -2,7 +2,7 @@ FROM node:alpine
 WORKDIR /workspace
 COPY ./src/frontend/package.json /workspace
 COPY ./src/frontend/public/index.html /workspace/public/
-COPY src /workspace/src/
+COPY ./src/frontend/src /workspace/
 RUN echo "$PWD"
 RUN ls
 RUN npm install
