@@ -1,4 +1,4 @@
-FROM maven:3.6.1-jdk-8-slim
+FROM maven:3.6.1-jdk-8-slim AS MAVEN_BUILD
 WORKDIR /build
 COPY pom.xml /build/
 COPY src /build/src/
@@ -7,7 +7,7 @@ RUN ls
 RUN mvn clean install
 
 FROM openjdk:8-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} application.jar
+WORKDIR /app
+COPY --from=MAVEN_BUILD /build/target/*.jar /app/application.jar
 EXPOSE 8081
-ENTRYPOINT ["java","-jar","/application.jar"]
+ENTRYPOINT ["java","-jar","application.jar"]
