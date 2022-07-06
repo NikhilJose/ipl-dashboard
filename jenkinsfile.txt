@@ -1,24 +1,21 @@
-	pipeline{
-	    agent any
-	    tools{
-	        maven 'maven3'
-	        'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'myDocker'
-	    }
-	    stages{
-	        stage("Git checkout"){
-	            steps{
-	                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/NikhilJose/ipl-dashboard.git']]])
-	            }
-	        }
-	        stage("Build Docker Image"){
-	            steps{
-	                 sh 'docker build -t nikhil/ipl-dashboard .'
-	            }
-	        }
-	        stage("Run Docker Container"){
-	            steps{
-	                    sh 'docker run -p 8081:8080 nikhil/ipl-dashboard:latest'
+pipeline{
+	agent any
+	tools{
+	    maven 'maven3'
+	}
+	stages{
+	    stage("Git checkout"){
+	        steps{
+	            script{
+	                sshagent(['dev']){
+	                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.235.42.26"
+	                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/NikhilJose/ipl-dashboard.git']]])
+	                	sh "whoami"
+	                	sh "docker build -t nikhil/ipl-dashboard ."
+						sh "docker run -p 8080:8080 nikhil/ipl-dashboard:latest"
+					}
 	             }
 	        }
 	    }
-	}
+    }
+}
